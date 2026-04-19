@@ -37,6 +37,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('area-parkir', AreaParkirController::class);
     Route::resource('tarif', TarifController::class);
     Route::resource('transaksi', TransaksiController::class);
-    Route::resource('transaksi', LogAktivitasController::class);
+    Route::resource('log-aktivitas', LogAktivitasController::class);
     
 });

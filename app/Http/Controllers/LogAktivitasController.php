@@ -10,12 +10,12 @@ class LogAktivitasController extends Controller
     public function index()
     {
         $data = LogAktivitas::with('user')->get();
-        return view('logAktivitas.index', compact('data'));
+        return view('LogAktivitas.index', compact('data'));
     }
 
     public function create()
     {
-        return view('logAktivitas.create');
+        return view('LogAktivitas.create');
     }
     public function store(Request $request)
 {
