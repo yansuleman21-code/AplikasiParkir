@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('logAktivitas', function (Blueprint $table) {
+            $table->id();
+
+            // user yang melakukan aktivitas
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+
+            // deskripsi aktivitas
+            $table->string('aktivitas');
+
+            // waktu otomatis
+            $table->timestamps();
+
+            // index biar cepat kalau filter log berdasarkan user
+            $table->index('user_id');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('logAktivitas');
+    }
+};

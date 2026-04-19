@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Tarif;
+
+class TarifController extends Controller
+{
+    public function index()
+    {
+        $tarif = Tarif::all();
+        return view('tarif.index', compact('tarif'));
+    }
+
+    public function create()
+    {
+        return view('tarif.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'jenis_kendaraan' => 'required',
+            'tarif_per_jam' => 'required|numeric',
+        ]);
+
+        Tarif::create($request->all());
+
+        return redirect()->route('tarif.index')->with('success', 'Tarif berhasil ditambahkan');
+    }
+
+    public function edit($id)
+    {
+        $tarif = Tarif::findOrFail($id);
+        return view('tarif.edit', compact('tarif'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $tarif = Tarif::findOrFail($id);
+
+        $request->validate([
+            'jenis_kendaraan' => 'required',
+            'tarif_per_jam' => 'required|numeric',
+        ]);
+
+        $tarif->update($request->all());
+
+        return redirect()->route('tarif.index')->with('success', 'Tarif berhasil diupdate');
+    }
+
+    public function destroy($id)
+    {
+        Tarif::destroy($id);
+        return redirect()->route('tarif.index')->with('success', 'Tarif berhasil dihapus');
+    }
+}
