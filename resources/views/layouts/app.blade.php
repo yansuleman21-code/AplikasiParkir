@@ -53,6 +53,7 @@
     <a href="/area-parkir">Area Parkir</a>
     <a href="/tarif">Tarif</a>
     <a href="/transaksi">Transaksi</a>
+    <a href="/log-aktivitas">Log Aktivitas</a>
 </div>
 
 <div class="content">

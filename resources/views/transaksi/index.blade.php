@@ -7,44 +7,55 @@
 </head>
 <body>
 
-    @section('content')
+    @extends('layouts.app')
 
-    <h2>Data Transaksi</h2>
+@section('content')
 
-    <a href="{{ route('transaksi.create') }}">Kendaraan Masuk</a>
+<h2>Data Transaksi</h2>
 
-    <table border="1">
-        <tr>
-            <th>No</th>
-            <th>No Polisi</th>
-            <th>Areea</th>
-            <th>Masuk</th>
-            <th>Keluar</th>
-            <th>Biaya</th>
-            <th>Aksi</th>
-        </tr>
+<a href="{{ route('transaksi.create') }}">Kendaraan Masuk</a>
 
-        @foreach ($data as $item )
-        <tr>
-            <td>{{ $sloop->interation }}</td>
-            <td>{{ $item->kendaraan->no_polisi }}</td>
-            <td>{{ $item->areaParkir->nama_area}}</td>
-            <td>{{ $item->waktu_masuk}}</td>
-            <td>{{ $item->waktu_keluar ?? '-' }}</td>
-            <td>
+<br><br>
 
-                <a href="{{ route('transaksi.show', $item->id) }}">Detail</a>
-                
-                @if(!$item->waktu_keluar)
-                <form merhod="POST" action="{{ route('transaksi.update',$item->id) }}">
-                    @csrf
-                    @method('POST')
-                    <button type="submit">Keluar</button>
-                    </form>
-                @endif
-            </td>
-        </tr>
-        @endforeach
+<table border="1" cellpadding="8" cellspacing="0">
+    <tr>
+        <th>No</th>
+        <th>No Polisi</th>
+        <th>Area</th>
+        <th>Masuk</th>
+        <th>Keluar</th>
+        <th>Biaya</th>
+        <th>Aksi</th>
+    </tr>
+
+    @forelse ($data as $item)
+    <tr>
+        <td>{{ $loop->iteration }}</td>
+        <td>{{ $item->kendaraan->no_polisi }}</td>
+        <td>{{ $item->areaParkir->nama_area }}</td>
+        <td>{{ $item->waktu_masuk }}</td>
+        <td>{{ $item->waktu_keluar ?? '-' }}</td>
+        <td>
+            Rp {{ number_format($item->biaya ?? 0, 0, ',', '.') }}
+        </td>
+        <td>
+            <a href="{{ route('transaksi.show', $item->id) }}">Detail</a>
+
+            @if(!$item->waktu_keluar)
+            <form method="POST" action="{{ route('transaksi.update', $item->id) }}" style="display:inline;">
+                @csrf
+                @method('PUT')
+                <button type="submit">Keluar</button>
+            </form>
+            @endif
+        </td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="7">Data tidak ada</td>
+    </tr>
+    @endforelse
+
 </table>
-</body>
-</html>
+
+@endsection

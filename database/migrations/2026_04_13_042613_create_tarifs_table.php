@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tarifs', function (Blueprint $table) {
             $table->id();
-            $table->enum('jenis_kendaraan', ['motor', 'mobil']);
-            $table->decimal('tarif_per_jam', 10, 2);
+            $table->string('jenis_kendaraan', ['motor', 'mobil']);
+            $table->integer('tarif_per_jam', 10, 2);
             $table->timestamps();
         });
     }
