@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App\Http\Controllers;
 
 use App\Models\Kendaraan;
@@ -12,9 +12,9 @@ class DashboardController extends Controller
         $totalKendaraan = Kendaraan::count();
         $totalTransaksi = Transaksi::count();
 
-        $kendaraanMasihParkir = Transaksi::whereNull('jam_keluar')->count();
+        $kendaraanMasihParkir = Transaksi::whereNull('waktu_keluar')->count();
 
-        $totalPemasukan = Transaksi::whereNotNull('total_bayar')->sum('total_bayar');
+        $totalPemasukan = Transaksi::whereNotNull('biaya')->sum('biaya');
 
         return view('dashboard', compact(
             'totalKendaraan',

@@ -32,9 +32,9 @@ class LogAktivitasController extends Controller
         ->with('success', 'Log berhasil ditambahkan');
 }
 
-    public function destroy($log_aktivitas)
+    public function destroy($id)
 {
-    $data = LogAktivitas::findOrFail($log_aktivitas);
+    $data = LogAktivitas::findOrFail($id);
     $data->delete();
 
     return redirect()->route('log-aktivitas.index')

@@ -14,9 +14,9 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kendaraan_id')->constrained ('kendaraans');
-            $table->foreignId('tarif_id')->constrained('tarifs');
-            $table->foreignId('area_parkir_id')->constrained('area_parkirs');
+            $table->foreignId('kendaraan_id')->constrained ('kendaraans')->cascadeOnDelete();
+            $table->foreignId('tarif_id')->constrained('tarifs')->cascadeOnDelete();
+            $table->foreignId('area_parkir_id')->constrained('area_parkirs')->cascadeOnDelete();
             
             $table->dateTime('waktu_masuk');
             $table->dateTime('waktu_keluar')->nullable();

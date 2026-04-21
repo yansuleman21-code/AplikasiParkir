@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tarif;
+use App\Models\LogAktivitas;
 
 class TarifController extends Controller
 {
@@ -27,7 +28,7 @@ class TarifController extends Controller
 
         Tarif::create($request->all());
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Menambahkan tarif baru untuk: ' . $request->jenis_kendaraan
         ]);
@@ -52,7 +53,7 @@ class TarifController extends Controller
 
         $tarif->update($request->all());
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Mengupdate tarif untuk: ' . $tarif->jenis_kendaraan
         ]);
@@ -66,7 +67,7 @@ class TarifController extends Controller
         $jenis = $tarif->jenis_kendaraan;
         $tarif->delete();
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Menghapus tarif untuk: ' . $jenis
         ]);

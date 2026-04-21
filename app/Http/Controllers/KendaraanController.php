@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kendaraan;
+use App\Models\LogAktivitas;
 use Illuminate\Http\Request;
 
 class KendaraanController extends Controller
@@ -35,7 +36,7 @@ class KendaraanController extends Controller
             'warna' => $request->warna,
         ]);
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Mendaftarkan kendaraan baru: ' . $request->no_polisi
         ]);
@@ -67,7 +68,7 @@ class KendaraanController extends Controller
 
         $data->update($request->all());
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Mengupdate data kendaraan: ' . $data->no_polisi
         ]);
@@ -81,7 +82,7 @@ class KendaraanController extends Controller
         $nopol = $data->no_polisi;
         $data->delete();
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Menghapus data kendaraan: ' . $nopol
         ]);

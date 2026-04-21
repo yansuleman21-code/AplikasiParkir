@@ -7,6 +7,7 @@ use App\Models\Transaksi;
 use App\Models\Kendaraan;
 use App\Models\Tarif;
 use App\Models\AreaParkir;
+use App\Models\LogAktivitas;
 use Carbon\Carbon;
 
 class TransaksiController extends Controller
@@ -38,7 +39,7 @@ class TransaksiController extends Controller
 
         $kendaraan = \App\Models\Kendaraan::find($request->kendaraan_id);
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Kendaraan Masuk: ' . ($kendaraan->no_polisi ?? 'N/A') . ' di area ' . ($transaksi->areaParkir->nama_area ?? 'N/A')
         ]);
@@ -71,7 +72,7 @@ class TransaksiController extends Controller
             'biaya' => $biaya
         ]);
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Kendaraan Keluar: ' . ($transaksi->kendaraan->no_polisi ?? 'N/A') . ' - Biaya: Rp ' . number_format($biaya)
         ]);
@@ -81,7 +82,15 @@ class TransaksiController extends Controller
     }
     public function destroy($id)
     {
-        Transaksi::destroy($id);
-        return back()->with('success','Data dihapus');
+        $transaksi = Transaksi::findOrFail($id);
+        $nopol = $transaksi->kendaraan->no_polisi ?? 'N/A';
+        $transaksi->delete();
+
+        LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Menghapus riwayat transaksi kendaraan: ' . $nopol
+        ]);
+
+        return back()->with('success','Data transaksi berhasil dihapus');
     }
 }

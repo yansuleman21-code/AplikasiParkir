@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AreaParkir;
+use App\Models\LogAktivitas;
 
 class AreaParkirController extends Controller
 {
@@ -27,7 +28,7 @@ class AreaParkirController extends Controller
 
         AreaParkir::create($request->all());
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Menambahkan area parkir baru: ' . $request->nama_area
         ]);
@@ -57,7 +58,7 @@ class AreaParkirController extends Controller
 
         $data->update($request->all());
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Mengupdate area parkir: ' . $data->nama_area
         ]);
@@ -71,7 +72,7 @@ class AreaParkirController extends Controller
         $nama = $data->nama_area;
         $data->delete();
 
-        \App\Models\LogAktivitas::create([
+        LogAktivitas::create([
             'user_id' => auth()->id(),
             'aktivitas' => 'Menghapus area parkir: ' . $nama
         ]);

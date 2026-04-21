@@ -30,10 +30,6 @@ Route::middleware(['auth'])->group(function () {
 // semua route yang butuh login
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
     Route::resource('kendaraan', KendaraanController::class);
     Route::resource('area-parkir', AreaParkirController::class);
     Route::resource('tarif', TarifController::class);
