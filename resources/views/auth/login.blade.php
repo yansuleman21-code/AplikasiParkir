@@ -12,7 +12,7 @@
             justify-content: center;
             align-items: center;
 
-            background: linear-gradient(135deg, #ea66e3, #6fa4e0);
+            background: linear-gradient(135deg, #f8bff5, #9ac9ff);
         }
 
         .card {
