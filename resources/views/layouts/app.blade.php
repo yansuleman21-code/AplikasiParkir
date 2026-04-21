@@ -263,6 +263,9 @@
         <a href="/tarif" class="{{ request()->is('tarif*') ? 'active' : '' }}">💰 Tarif Parkir</a>
         <a href="/transaksi" class="{{ request()->is('transaksi*') ? 'active' : '' }}">🧾 Transaksi</a>
         <a href="/log-aktivitas" class="{{ request()->is('log-aktivitas*') ? 'active' : '' }}">📋 Log Aktivitas</a>
+        @if(auth()->user()->role == 'admin')
+        <a href="/users" class="{{ request()->is('users*') ? 'active' : '' }}">👥 Manajemen User</a>
+        @endif
     </nav>
 
     <div class="sidebar-footer">

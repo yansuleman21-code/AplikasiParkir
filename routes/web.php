@@ -36,4 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('transaksi', TransaksiController::class);
     Route::resource('log-aktivitas', LogAktivitasController::class);
     
+    Route::middleware(['admin'])->group(function () {
+        Route::resource('users', \App\Http\Controllers\UserController::class);
+    });
 });
