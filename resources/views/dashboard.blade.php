@@ -51,6 +51,7 @@
     .icon-blue { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
     .icon-green { background: rgba(16, 185, 129, 0.1); color: #10b981; }
     .icon-orange { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+    .icon-purple { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
 
     .stat-info h4 {
         font-size: 0.9rem;
@@ -83,7 +84,7 @@
         <div class="stat-icon icon-blue">🚗</div>
         <div class="stat-info">
             <h4>Total Kendaraan</h4>
-            <div class="count">{{ \App\Models\Kendaraan::count() }}</div>
+            <div class="count">{{ number_format($totalKendaraan, 0, ',', '.') }}</div>
         </div>
     </div>
 
@@ -91,7 +92,7 @@
         <div class="stat-icon icon-green">📍</div>
         <div class="stat-info">
             <h4>Area Parkir</h4>
-            <div class="count">{{ \App\Models\AreaParkir::count() }}</div>
+            <div class="count">{{ number_format($totalArea, 0, ',', '.') }}</div>
         </div>
     </div>
 
@@ -99,7 +100,15 @@
         <div class="stat-icon icon-orange">🎫</div>
         <div class="stat-info">
             <h4>Transaksi Hari Ini</h4>
-            <div class="count">{{ \App\Models\Transaksi::whereDate('created_at', today())->count() }}</div>
+            <div class="count">{{ number_format($transaksiHariIni, 0, ',', '.') }}</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon icon-purple">💰</div>
+        <div class="stat-info">
+            <h4>Total Pendapatan</h4>
+            <div class="count">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</div>
         </div>
     </div>
 </div>
