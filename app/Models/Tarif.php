@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tarif extends Model
 {
-    protected $table = 'tarif';
+    protected $table = 'tarifs';
 
     protected $primaryKey = 'id';
 

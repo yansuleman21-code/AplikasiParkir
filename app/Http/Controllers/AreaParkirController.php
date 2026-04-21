@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\AreaParkir;
 
 class AreaParkirController extends Controller
 {
     public function index()
     {
-        return view('area_parkir.index');
+        $data = AreaParkir::all();
+        return view('area_parkir.index', compact('data'));
     }
 
     public function create()
@@ -18,8 +20,19 @@ class AreaParkirController extends Controller
 
     public function store(Request $request)
     {
-        // sementara kosong dulu
-        return redirect()->route('area-parkir.index');
+        $request->validate([
+            'nama_area' => 'required',
+            'kapasitas' => 'required|integer',
+        ]);
+
+        AreaParkir::create($request->all());
+
+        \App\Models\LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Menambahkan area parkir baru: ' . $request->nama_area
+        ]);
+
+        return redirect()->route('area-parkir.index')->with('success', 'Area parkir berhasil ditambahkan');
     }
 
     public function show($id)
@@ -29,16 +42,40 @@ class AreaParkirController extends Controller
 
     public function edit($id)
     {
-        //
+        $data = AreaParkir::findOrFail($id);
+        return view('area_parkir.edit', compact('data'));
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $data = AreaParkir::findOrFail($id);
+
+        $request->validate([
+            'nama_area' => 'required',
+            'kapasitas' => 'required|integer',
+        ]);
+
+        $data->update($request->all());
+
+        \App\Models\LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Mengupdate area parkir: ' . $data->nama_area
+        ]);
+
+        return redirect()->route('area-parkir.index')->with('success', 'Area parkir berhasil diupdate');
     }
 
     public function destroy($id)
     {
-        //
+        $data = AreaParkir::findOrFail($id);
+        $nama = $data->nama_area;
+        $data->delete();
+
+        \App\Models\LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Menghapus area parkir: ' . $nama
+        ]);
+
+        return redirect()->route('area-parkir.index')->with('success', 'Area parkir berhasil dihapus');
     }
 }

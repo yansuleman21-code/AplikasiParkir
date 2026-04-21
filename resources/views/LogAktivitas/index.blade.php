@@ -2,160 +2,53 @@
 
 @section('content')
 
-<style>
-    .container {
-        padding: 20px;
-        font-family: 'Poppins', sans-serif;
-    }
+<div class="page-header">
+    <h2>📋 Log Aktivitas Sistem</h2>
+</div>
 
-    h2 {
-        margin-bottom: 15px;
-        color: #333;
-    }
-
-    .top-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .btn {
-        padding: 8px 14px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 500;
-        transition: 0.3s;
-    }
-
-    .btn-add {
-        background: #667eea;
-        color: white;
-    }
-
-    .btn-add:hover {
-        background: #5a67d8;
-    }
-
-    .btn-edit {
-        background: #38a169;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-
-    .btn-delete {
-        background: #e53e3e;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-
-    .btn-edit:hover {
-        background: #2f855a;
-    }
-
-    .btn-delete:hover {
-        background: #c53030;
-    }
-
-    .alert-success {
-        background: #e6fffa;
-        color: #2c7a7b;
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    th {
-        background: #667eea;
-        color: white;
-        padding: 12px;
-        text-align: left;
-        font-size: 14px;
-    }
-
-    td {
-        padding: 12px;
-        border-bottom: 1px solid #eee;
-        font-size: 14px;
-    }
-
-    tr:hover {
-        background: #f7fafc;
-    }
-
-    .empty {
-        text-align: center;
-        color: #999;
-        padding: 20px;
-    }
-
-    .aksi {
-        display: flex;
-        gap: 8px;
-    }
-</style>
-
-<div class="container">
-
-    <div class="top-bar">
-        <h2>🚗 Data Area Parkir</h2>
-        <a href="{{ route('area-parkir.create') }}" class="btn btn-add">+ Tambah</a>
+@if(session('success'))
+    <div class="card" style="margin-bottom: 2rem; background: #ecfdf5; border-color: #10b981; color: #065f46; padding: 1rem;">
+        {{ session('success') }}
     </div>
+@endif
 
-    @if (session('success'))
-        <div class="alert-success">{{ session('success') }}</div>
-    @endif
-
-    <table>
+<div class="table-card">
+    <table class="data-table">
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama Area</th>
-                <th>Kapasitas</th>
-                <th>Aksi</th>
+                <th style="width: 80px;">No</th>
+                <th>Waktu</th>
+                <th>User</th>
+                <th>Aktivitas</th>
+                <th style="width: 150px;">Aksi</th>
             </tr>
         </thead>
-
         <tbody>
             @forelse ($data as $item)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->nama_area }}</td>
-                <td>{{ $item->kapasitas }}</td>
+                <td><span class="badge badge-blue">{{ $item->created_at->format('d M Y H:i') }}</span></td>
+                <td><strong>{{ $item->user->name ?? 'System' }}</strong></td>
+                <td>{{ $item->aktivitas }}</td>
                 <td>
-                    <div class="aksi">
-                        <a href="{{ route('area-parkir.edit', $item->id) }}" class="btn btn-edit">Edit</a>
-
-                        <form action="{{ route('area-parkir.destroy', $item->id) }}"
-                              method="POST"
-                              onsubmit="return confirm('Yakin ingin hapus data ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-delete">Hapus</button>
-                        </form>
-                    </div>
+                    <form action="{{ route('log-aktivitas.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus data ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            🗑 Hapus
+                        </button>
+                    </form>
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="4" class="empty">Data Belum Tersedia</td>
+                <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                    🚫 Belum ada aktivitas tercatat
+                </td>
             </tr>
             @endforelse
         </tbody>
     </table>
-
 </div>
 
 @endsection

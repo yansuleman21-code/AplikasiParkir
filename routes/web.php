@@ -12,8 +12,9 @@ use App\Http\Controllers\LogAktivitasController;
 
 
 // redirect ke login
+// Landing Page
 Route::get('/', function () {
-    return redirect('/login');
+    return view('welcome');
 });
 
 // login route

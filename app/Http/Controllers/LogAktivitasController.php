@@ -9,7 +9,7 @@ class LogAktivitasController extends Controller
 {
     public function index()
     {
-        $data = LogAktivitas::with('user')->get();
+        $data = LogAktivitas::with('user')->latest()->get();
         return view('LogAktivitas.index', compact('data'));
     }
 
@@ -28,7 +28,7 @@ class LogAktivitasController extends Controller
         'aktivitas' => $request->aktivitas,
     ]);
 
-    return redirect()->route('logAktivitas.index')
+    return redirect()->route('log-aktivitas.index')
         ->with('success', 'Log berhasil ditambahkan');
 }
 
@@ -37,7 +37,7 @@ class LogAktivitasController extends Controller
     $data = LogAktivitas::findOrFail($log_aktivitas);
     $data->delete();
 
-    return redirect()->route('logAktivitas.index')
+    return redirect()->route('log-aktivitas.index')
         ->with('success', 'Log berhasil dihapus');
 }
 }

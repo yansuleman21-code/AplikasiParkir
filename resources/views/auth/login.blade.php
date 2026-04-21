@@ -76,7 +76,12 @@
         <input type="password" name="password" placeholder="Password" required>
 
         <button type="submit">Login</button>
+        <a href="/" style="display: block; text-align: center; margin-top: 15px; color: #6366f1; text-decoration: none; font-size: 14px; font-weight: 500;">← Kembali ke Beranda</a>
     </form>
+</div>
+
+<div style="position: absolute; bottom: 20px; color: white; font-size: 0.9rem; opacity: 0.8; text-align: center; width: 100%;">
+    &copy; {{ date('Y') }} Sistem Informasi Manajemen Parkir. By 3FFF.
 </div>
 
 </body>

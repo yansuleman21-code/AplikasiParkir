@@ -12,11 +12,11 @@ class Transaksi extends Model
         'kendaraan_id',
         'tarif_id',
         'area_parkir_id',
-        'waktu_masuk_id',
-        'waktu_keluar_id',
-        'durasi_id',
-        'biaya_id',
-        'user_id',
+        'waktu_masuk',
+        'waktu_keluar',
+        'durasi',
+        'biaya',
+        'user_id'
     ];
 
     public function kendaraan()

@@ -28,12 +28,19 @@ class TransaksiController extends Controller
 
     public function store(Request $request)
     {
-        Transaksi::create([
+        $transaksi = Transaksi::create([
             'kendaraan_id'=> $request->kendaraan_id,
             'tarif_id'=> $request->tarif_id,
             'area_parkir_id'=> $request->area_parkir_id,
             'waktu_masuk'=> now(),
             'user_id'=> auth()->id()
+        ]);
+
+        $kendaraan = \App\Models\Kendaraan::find($request->kendaraan_id);
+
+        \App\Models\LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Kendaraan Masuk: ' . ($kendaraan->no_polisi ?? 'N/A') . ' di area ' . ($transaksi->areaParkir->nama_area ?? 'N/A')
         ]);
 
         return redirect()->route('transaksi.index')
@@ -51,14 +58,22 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::findOrFail($id);
 
         $waktu_keluar = now();
-        $durasi = ceil((strtotime($waktu_keluar) - strtotime($transaksi->waktu_masuk)) / 3600);
+        $waktu_masuk = Carbon::parse($transaksi->waktu_masuk);
+        
+        // Hitung selisih jam, minimal 1 jam
+        $durasi = max(1, ceil($waktu_masuk->diffInMinutes($waktu_keluar) / 60));
 
-        $biaya = $durasi * $transaksi->tarif->tarif_per_jam;
+        $biaya = $durasi * ($transaksi->tarif->tarif_per_jam ?? 0);
 
         $transaksi->update([
-            'waktu_keluar'=>$waktu_keluar,
-            'durasi'=>$durasi,
-            'biaya'=>$biaya
+            'waktu_keluar' => $waktu_keluar,
+            'durasi' => $durasi,
+            'biaya' => $biaya
+        ]);
+
+        \App\Models\LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Kendaraan Keluar: ' . ($transaksi->kendaraan->no_polisi ?? 'N/A') . ' - Biaya: Rp ' . number_format($biaya)
         ]);
 
         return redirect()->route('transaksi.index')

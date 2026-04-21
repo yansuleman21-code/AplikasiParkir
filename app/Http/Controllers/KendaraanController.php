@@ -35,6 +35,11 @@ class KendaraanController extends Controller
             'warna' => $request->warna,
         ]);
 
+        \App\Models\LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Mendaftarkan kendaraan baru: ' . $request->no_polisi
+        ]);
+
         return redirect()->route('kendaraan.index')->with('success', 'Data berhasil ditambahkan');
     }
 
@@ -62,13 +67,24 @@ class KendaraanController extends Controller
 
         $data->update($request->all());
 
+        \App\Models\LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Mengupdate data kendaraan: ' . $data->no_polisi
+        ]);
+
         return redirect()->route('kendaraan.index')->with('success', 'Data berhasil diupdate');
     }
 
     public function destroy($id)
     {
         $data = Kendaraan::findOrFail($id);
+        $nopol = $data->no_polisi;
         $data->delete();
+
+        \App\Models\LogAktivitas::create([
+            'user_id' => auth()->id(),
+            'aktivitas' => 'Menghapus data kendaraan: ' . $nopol
+        ]);
 
         return redirect()->route('kendaraan.index')->with('success', 'Data berhasil dihapus');
     }

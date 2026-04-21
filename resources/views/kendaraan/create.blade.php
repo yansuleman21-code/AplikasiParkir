@@ -2,78 +2,41 @@
 
 @section('content')
 
-<div class="container py-4">
+<div class="page-header">
+    <h2>🚗 Tambah Kendaraan Baru</h2>
+</div>
 
-    <h3>🚗 Tambah Kendaraan</h3>
+<div class="form-card">
+    <form method="POST" action="{{ route('kendaraan.store') }}">
+        @csrf
 
-    <div class="card shadow-sm mt-3">
-        <div class="card-body">
-
-            <form method="POST" action="{{ route('kendaraan.store') }}">
-                @csrf
-
-                {{-- No Polisi --}}
-                <div class="mb-3">
-                    <label class="form-label">🚘 No Polisi</label>
-                    <input type="text"
-                           name="no_polisi"
-                           value="{{ old('no_polisi') }}"
-                           class="form-control @error('no_polisi') is-invalid @enderror"
-                           placeholder="Contoh: B 1234 ABC">
-
-                    @error('no_polisi')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                {{-- Jenis --}}
-                <div class="mb-3">
-                    <label class="form-label">🛵 Jenis</label>
-                    <select name="jenis"
-                            class="form-select @error('jenis') is-invalid @enderror">
-
-                        <option value="">-- Pilih Jenis --</option>
-                        <option value="motor" {{ old('jenis') == 'motor' ? 'selected' : '' }}>
-                            🏍 Motor
-                        </option>
-                        <option value="mobil" {{ old('jenis') == 'mobil' ? 'selected' : '' }}>
-                            🚗 Mobil
-                        </option>
-                    </select>
-
-                    @error('jenis')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                {{-- Warna --}}
-                <div class="mb-3">
-                    <label class="form-label">🎨 Warna</label>
-                    <input type="text"
-                           name="warna"
-                           value="{{ old('warna') }}"
-                           class="form-control @error('warna') is-invalid @enderror"
-                           placeholder="Contoh: Hitam">
-
-                    @error('warna')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                {{-- Tombol --}}
-                <button class="btn btn-success">
-                    💾 Simpan
-                </button>
-
-                <a href="{{ route('kendaraan.index') }}" class="btn btn-secondary">
-                    ↩ Batal
-                </a>
-
-            </form>
-
+        <div class="form-group">
+            <label class="form-label">🚘 No Polisi</label>
+            <input type="text" name="no_polisi" value="{{ old('no_polisi') }}" class="form-control" placeholder="B 1234 ABC" required>
+            @error('no_polisi') <small style="color: #ef4444;">{{ $message }}</small> @enderror
         </div>
-    </div>
 
+        <div class="form-group">
+            <label class="form-label">🛵 Jenis Kendaraan</label>
+            <select name="jenis" class="form-control" required>
+                <option value="">-- Pilih Jenis --</option>
+                <option value="motor" {{ old('jenis') == 'motor' ? 'selected' : '' }}>Motor</option>
+                <option value="mobil" {{ old('jenis') == 'mobil' ? 'selected' : '' }}>Mobil</option>
+            </select>
+            @error('jenis') <small style="color: #ef4444;">{{ $message }}</small> @enderror
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">🎨 Warna</label>
+            <input type="text" name="warna" value="{{ old('warna') }}" class="form-control" placeholder="Hitam" required>
+            @error('warna') <small style="color: #ef4444;">{{ $message }}</small> @enderror
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary">💾 Simpan Kendaraan</button>
+            <a href="{{ route('kendaraan.index') }}" class="btn btn-sm" style="color: var(--text-muted);">Batal</a>
+        </div>
+    </form>
 </div>
 
 @endsection
