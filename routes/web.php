@@ -31,9 +31,12 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     Route::resource('kendaraan', KendaraanController::class);
+    Route::get('/scan-tiket', [TransaksiController::class, 'scan'])->name('transaksi.scan');
     Route::resource('area-parkir', AreaParkirController::class);
     Route::resource('tarif', TarifController::class);
+    Route::get('/transaksi/{id}/cetak', [TransaksiController::class, 'cetak'])->name('transaksi.cetak');
     Route::resource('transaksi', TransaksiController::class);
+    Route::delete('/log-aktivitas/clear', [LogAktivitasController::class, 'clear'])->name('log-aktivitas.clear');
     Route::resource('log-aktivitas', LogAktivitasController::class);
     
     Route::middleware(['admin'])->group(function () {

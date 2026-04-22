@@ -262,6 +262,7 @@
         <a href="/area-parkir" class="{{ request()->is('area-parkir*') ? 'active' : '' }}">📍 Area Parkir</a>
         <a href="/tarif" class="{{ request()->is('tarif*') ? 'active' : '' }}">💰 Tarif Parkir</a>
         <a href="/transaksi" class="{{ request()->is('transaksi*') ? 'active' : '' }}">🧾 Transaksi</a>
+        <a href="{{ route('transaksi.scan') }}" class="{{ request()->is('scan-tiket*') ? 'active' : '' }}">📷 Scan Tiket</a>
         <a href="/log-aktivitas" class="{{ request()->is('log-aktivitas*') ? 'active' : '' }}">📋 Log Aktivitas</a>
         @if(auth()->user()->role == 'admin')
         <a href="/users" class="{{ request()->is('users*') ? 'active' : '' }}">👥 Manajemen User</a>

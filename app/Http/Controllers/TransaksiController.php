@@ -93,4 +93,15 @@ class TransaksiController extends Controller
 
         return back()->with('success','Data transaksi berhasil dihapus');
     }
+
+    public function cetak($id)
+    {
+        $data = Transaksi::with(['kendaraan','tarif','areaParkir'])->findOrFail($id);
+        return view('transaksi.cetak', compact('data'));
+    }
+
+    public function scan()
+    {
+        return view('transaksi.scan');
+    }
 }

@@ -33,11 +33,18 @@ class LogAktivitasController extends Controller
 }
 
     public function destroy($id)
-{
-    $data = LogAktivitas::findOrFail($id);
-    $data->delete();
+    {
+        $data = LogAktivitas::findOrFail($id);
+        $data->delete();
 
-    return redirect()->route('log-aktivitas.index')
-        ->with('success', 'Log berhasil dihapus');
-}
+        return redirect()->route('log-aktivitas.index')
+            ->with('success', 'Log berhasil dihapus');
+    }
+
+    public function clear()
+    {
+        LogAktivitas::truncate();
+        return redirect()->route('log-aktivitas.index')
+            ->with('success', 'Semua log aktivitas telah dibersihkan');
+    }
 }

@@ -4,6 +4,15 @@
 
 <div class="page-header">
     <h2>📋 Log Aktivitas Sistem</h2>
+    @if($data->count() > 0)
+    <form action="{{ route('log-aktivitas.clear') }}" method="POST" onsubmit="return confirm('⚠️ PERINGATAN: Ini akan menghapus SELURUH riwayat aktivitas. Lanjutkan?')">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger">
+            🗑️ Kosongkan Semua Log
+        </button>
+    </form>
+    @endif
 </div>
 
 @if(session('success'))
