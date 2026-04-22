@@ -71,23 +71,9 @@
             animation: fadeInUp 1s ease-out;
         }
 
-        .hero-image {
+        .hero-content {
             flex: 1;
-            position: relative;
-            animation: fadeInRight 1s ease-out;
-        }
-
-        .hero-image img {
-            width: 100%;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
-            transition: 0.5s;
-        }
-
-        .hero-image img:hover {
-            transform: perspective(1000px) rotateY(0) rotateX(0);
+            animation: fadeInUp 1s ease-out;
         }
 
         h1 {
@@ -174,10 +160,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
 
         @media (max-width: 968px) {
             .hero {
@@ -188,7 +170,6 @@
             }
             h1 { font-size: 3rem; }
             .cta-buttons { justify-content: center; }
-            .hero-image { display: none; }
         }
     </style>
 </head>
@@ -203,17 +184,14 @@
     </header>
 
     <main>
-        <section class="hero">
-            <div class="hero-content">
+        <section class="hero" style="justify-content: center; text-align: center;">
+            <div class="hero-content" style="display: flex; flex-direction: column; align-items: center; max-width: 800px;">
                 <h1>Kelola Parkir Lebih Cerdas & Cepat.</h1>
                 <p class="subtitle">Sistem manajemen parkir terpadu untuk efisiensi maksimal. Pantau kendaraan, atur tarif, dan lihat laporan dalam satu dashboard modern.</p>
                 <div class="cta-buttons">
                     <a href="{{ route('login') }}" class="btn btn-primary">Mulai Sekarang</a>
                     <a href="#features" class="btn btn-outline">Lihat Fitur</a>
                 </div>
-            </div>
-            <div class="hero-image">
-                <img src="{{ asset('images/ukk.png') }}" alt="Dashboard Parkir">
             </div>
         </section>
 
